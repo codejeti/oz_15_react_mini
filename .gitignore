@@ -1,19 +1,25 @@
 # 의존성 (Dependencies)
-# (oz-mini-porject 폴더 안의 node_modules 포함, 루트에서 실행해도 무시됨)
 node_modules
 /oz-mini-porject/node_modules 
 
 # 빌드 결과물 (Build Output)
+# Vite의 기본 빌드 폴더
 /dist
-/build
-.vite # Vite 캐시 디렉터리
+/out 
+
+# Vite 관련 캐시 파일 및 폴더
+.vite
+/public/build
+/.vite-inspect
 
 # 환경 변수 (Environment Variables)
 .env
 .env.local
 .env.*.local
 
-# 로그 파일 (Logs)
+# 로그 파일 및 운영체제 관련 파일
 npm-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+.DS_Store 
+.vscode/
