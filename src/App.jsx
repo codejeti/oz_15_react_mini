@@ -1,25 +1,26 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import './index.css'
 import Home from './pages/Home';
-import Detail from './pages/Detail';
-import MovieRequestForm from './pages/MovieRequestForm';
-import DarkModeToggle from './components/DarkModeToggle';
+import MovieDetail from './pages/MovieDetail';
+import MovieRequestForm from "./pages/MovieRequestForm";
 
-const App = () => {
+function App() {
   return (
+    <Provider store={store}>
     <Router>
-    <div className="bg-gray-900 min-h-screen text-white font-sans">
-    <DarkModeToggle />
-
+    <div className="bg-gray-900 min-h-screen text-white">
     <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/movie/:id" element={<Detail />} />
+    <Route path="/movie/:id" element={<MovieDetail />} />
     <Route path="/request" element={<MovieRequestForm />} />
     </Routes>
     </div>
     </Router>
+    </Provider>
   );
-};
+}
 
 export default App;

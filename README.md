@@ -1,187 +1,174 @@
-# React + Vite
+# 🎬 Movie Explorer App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Redux + TailwindCSS 기반 영화 추천 및 검색 서비스입니다.  
+TMDB API를 이용하여 인기 영화, 평점 높은 영화 목록을 제공하며 검색 기능과 영화 상세보기 기능을 포함합니다.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 주요 기능
 
-## React Compiler
+### ✅ 1. 메인 캐러셀 (MovieCarousel)
+- 자동으로 영화 슬라이드 전환
+- 평점 높은 영화 순으로 표시
+- **백그라운드 이미지 중앙 정렬 처리 완료**
+- 반응형 지원
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### ✅ 2. 인기 영화 목록 (Pagination 지원)
+- 처음 1페이지 불러옴
+- "더 불러오기" 버튼으로 페이지 증가
+- Redux 상태 기반 추가 로딩 가능
 
-Note: This will impact Vite dev & build performances.
+### ✅ 3. 검색 기능 (MovieSearch)
+- TMDB 검색 API 사용
+- 검색 결과는 MovieSlider UI 재활용
+- 검색 결과 있을 때만 자동 표시
 
-## Expanding the ESLint configuration
+### ✅ 4. 영화 상세 페이지
+- 영화 설명, 이미지, 평점 노출
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### ✅ 5. 영화 요청 페이지 (RequestPage)
+- 제목, 설명 입력 후 요청 완료 처리
+- 이후 Firebase 추가 가능
 
-🎥 MOVIZ: React 영화 예고편 앱 (GitHub 버전)
+---
 
-다크 모드와 반응형 디자인을 갖춘 영화 예고편 탐색 웹 애플리케이션
+---
 
-📌 목차 (Table of Contents)
+## 📂 프로젝트 구조
 
-프로젝트 개요
 
-기술 스택 및 환경 설정
 
-실행 방법
+src
+│ App.jsx
+│ main.jsx
+│ index.css
+│ store/store.jsx
+│ store/movieSlice.js
+│ components/
+│ ├ MovieCarousel.jsx
+│ ├ MovieSlider.jsx
+│ ├ MovieCard.jsx
+│ ├ Skeleton.jsx
+│ ├ MovieSearch.jsx
+│ pages/
+│ ├ Home.jsx
+│ ├ MovieDetail.jsx
+│ ├ RequestPage.jsx
 
-주요 디버깅 히스토리 (V4 → V3)
 
-핵심 파일 요약
+---
 
-1. 프로젝트 개요
+---
 
-이 프로젝트는 React와 Tailwind CSS v3을 기반으로 구축된 반응형 영화 예고편 앱입니다. 다크 테마 디자인과 안정적인 빌드 환경을 핵심 목표로 개발되었습니다.
+## 🛠 주요 문제 해결 기록
 
-2. 기술 스택 및 환경 설정
+### 🧩 1) Carousel이 왼쪽으로 쏠리는 문제
+원인
+- 부모 컨테이너가 제한(width: max-7xl)
+- 이미지 background-position이 left로 정렬됨
 
-2.1 최종 기술 스택
+해결 방법 핵심 코드:
 
-분류
+```jsx
+<div className="w-screen relative left-1/2 -translate-x-1/2">
+  <MovieCarousel />
+</div>
 
-기술
 
-최종 버전
+그리고 CSS:
 
-역할 및 설명
+style={{
+  backgroundImage: `url(...)`,
+  backgroundPosition: "center",
+  backgroundSize: "cover"
+}}
 
-Frontend
 
-React
+👉 이미지 중앙 정렬 성공
+👉 초광폭 모니터에서도 정상 표시
 
-^19.2.0
+🧩 2) MovieDetail 파일 불러오기 실패
 
-UI 구성 및 상태 관리
+오류 메시지:
 
-Styling
+Failed to resolve import "./pages/MovieDetail"
 
-Tailwind CSS
 
-v3.4.4
+원인: 실제 파일명은 Detail.jsx
 
-안정화된 유틸리티 우선 CSS 프레임워크
+해결 방법:
 
-Bundler
+파일명을 MovieDetail.jsx 로 변경
 
-Vite
-
-rolldown-vite@7.2.5
-
-빠르고 효율적인 개발 서버 및 빌드 도구
-
-Processor
-
-PostCSS
-
-v8.4.38
-
-CSS 전처리 (Tailwind 통합)
-
-Icons
-
-lucide-react
-
--
-
-심플하고 일관된 아이콘 제공
-
-Modules
-
-TypeScript (JSX)
-
--
-
-정적 타입 검사 지원
-
-2.2 핵심 설정 파일 및 V3 통합 규격
-
-이 프로젝트는 Tailwind CSS v3의 안정적인 PostCSS 통합 방식을 따릅니다.
-
-postcss.config.js (V3 표준 설정)
-
-PostCSS 설정 파일은 Tailwind CSS v3 버전의 표준 로드 방식인 함수 호출을 사용해야 빌드 파이프라인이 정상 작동합니다.
-
-// PostCSS 설정 파일: Tailwind V3 규격
-import tailwindcss from 'tailwindcss'; 
-import autoprefixer from 'autoprefixer';
-
-export default {
-  plugins: [
-    // V3는 반드시 플러그인을 함수처럼 호출 ( ) 해야 합니다.
-    tailwindcss(), 
-    autoprefixer(),
-  ],
-}
-
-
-3. 실행 방법 (Quick Start)
-
-3.1 전제 조건
-
-Node.js (LTS 버전)
-
-npm 또는 Yarn
-
-Vite 환경
-
-3.2 실행 명령어
-
-프로젝트를 구동하는 표준 명령어는 다음과 같습니다.
-
-의존성 설치 (최초 1회):
-
-npm install
-
-
-개발 서버 실행:
-
-npm run dev
-
-
-🚨 중요: 접속 시 주의사항
-
-반드시 npm run dev로 서버를 실행하고, 터미널에 표시되는 http://localhost:5173/ 주소로 접속해야 합니다.
-
-ORB/CORS 보안 에러 방지: file:/// 로컬 경로로 index.html을 직접 열면, 브라우저의 보안 정책에 의해 외부 리소스(Mock 이미지, API 호출 등)가 차단되어 앱이 정상적으로 표시되지 않습니다. 이 문제 해결을 위해 Vite 개발 서버 사용이 강제됩니다.
-
-4. 주요 디버깅 히스토리 (V4 → V3 전환 과정)
-
-프로젝트 초기, Tailwind CSS v4를 시도했으나 안정성 문제로 v3으로 다운그레이드 했습니다. 이 과정은 빌드 환경을 안정화하는 데 중요한 역할을 했습니다.
-
-4.1 ❌ 문제점: Tailwind V4 설정 실패
+🧩 3) unknown at rule @tailwind 문제
 
 원인:
 
-V4의 알파/프리뷰 상태: Tailwind CSS v4는 현재 정식(Stable) 버전이 아닌 Alpha/Beta 단계입니다.
+VSCode Tailwind 플러그인 인식 문제
 
-아키텍처 변경: V4는 기존 JavaScript 기반 PostCSS 엔진 대신 Rust 기반의 새로운 코어를 도입하면서 모듈 로딩 및 통합 규격이 완전히 달라졌습니다.
+컴파일 과정에서는 정상 작동
 
-모듈 통합 충돌: 새로운 코어는 @tailwindcss/postcss와 같은 별도의 플러그인을 요구하며, 기존 V3의 단순한 함수 호출(tailwindcss()) 방식과 충돌하여 잦은 Cannot find package 오류나 Syntax Error를 유발했습니다.
+결론:
+✔ 오류 무시 가능
+✔ 빌드와 실행에는 문제 없음
 
-✅ 결론 및 해결책:
+🧱 Tailwind 설정
 
-안정성 우선: 통합 안정성 문제 해결을 위해 **Tailwind CSS v3.4.4 (Stable 버전)**으로 다운그레이드했습니다.
+프로젝트 루트에 아래가 있어야 함
 
-설정 변경: postcss.config.js 파일의 플러그인 로드 방식을 V3 표준인 tailwindcss() 함수 호출 형태로 수정하여 빌드 파이프라인을 안정화했습니다.
+tailwind.config.js
+module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
 
-5. 핵심 파일 요약
+postcss.config.js
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
 
-5.1 MovieTrailerApp.jsx (메인 컴포넌트)
 
-애플리케이션의 핵심 UI와 로직이 담긴 파일입니다.
+그리고 index.css 최상단:
 
-주요 기능: 다크 테마 디자인, 반응형 내비게이션 메뉴 (Mobile Menu), 영화 목록 필터링(검색), 예고편 카드 표시.
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-V3 전환 영향: Tailwind 클래스 이름이 V3/V4 모두 동일하기 때문에, 내부 코드는 수정할 필요가 없었습니다.
+👇 실행 방법
+의존성 설치
+npm install
 
-5.2 package.json (프로젝트 의존성)
+개발 모드 실행
+npm run dev
 
-Tailwind V4 관련 패키지는 제거되었고, V3 코어와 필수 PostCSS 플러그인들이 devDependencies에 정의되어 있습니다.
+🔥 기술 스택
+기술	사용 목적
+React	UI 구조
+Redux Toolkit	전역 상태관리
+React Router	페이지 이동
+Tailwind CSS	스타일링
+TMDB API	영화 정보 제공
+Lucide Icons	아이콘 사용
+🧃 향후 확장 아이디어
 
-5.3 tailwind.config.js (커스터마이징 예시)
+✔ Firebase Firestore 연동하여
+→ “영화 요청” 저장 가능
+✔ 사용자 리뷰 기능
+✔ 영화별 좋아요/북마크 기능
+✔ 로그인 / 인증 기능 추가 가능
 
-프로젝트에서 사용된 커스텀 색상(예: dark-bg, primary-red, light-gray)을 정의하여 다크 테마의 일관성을 유지합니다.
+🎉 상태
+
+👉 UI 완성
+👉 기능 정상 작동
+👉 반응형 처리 완료
+👉 버그 수정 완료

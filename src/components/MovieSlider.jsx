@@ -16,7 +16,7 @@ const MovieSlider = ({ title, movies }) => {
       </h2>
 
       {/* 가로 스크롤 컨테이너 */}
-      <div className="flex overflow-x-scroll space-x-4 pb-4 px-2 scrollbar-hide">
+      <div className="flex overflow-x-auto space-x-4 pb-4 px-2 scrollbar-hide max-w-full">
         {movies.map((movie) => (
           <div
             key={movie.id}

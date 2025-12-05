@@ -1,4 +1,3 @@
-// Redux 임포트 추가
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +12,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-const { selectedMovie: movie, detailStatus, detailError } = useSelector((state) => state.movie);
+  const { selectedMovie: movie, detailStatus, detailError } = useSelector((state) => state.movie);
 
   useEffect(() => {
     if (id) {
@@ -29,41 +28,48 @@ const { selectedMovie: movie, detailStatus, detailError } = useSelector((state) 
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white pb-20">
+    <div className="min-h-screen text-white pb-20">
     <div className="relative h-[50vh] w-full">
     <div
-    className="absolute inset-0 bg-cover bg-center"
+    className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
     style={{ backgroundImage: `url(${BACKDROP_BASE_URL}${movie.backdrop_path})` }}
     >
-    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
-    </div>
-
+    {/* 어두운 오버레이 */}
+    <div className="absolute inset-0 bg-black opacity-70"></div>
+    {/* 뒤로가기 버튼 */}
     <button
     onClick={() => navigate(-1)}
-    className="absolute top-6 left-6 z-10 p-2 bg-black/50 rounded-full hover:bg-yellow-500 hover:text-black transition"
+    className="absolute top-4 left-4 z-10 p-2 bg-gray-800 rounded-full hover:bg-yellow-500 hover:text-black transition"
+    aria-label="뒤로가기"
     >
-    <ChevronLeft size={28} />
+    <ChevronLeft size={24} />
     </button>
+    </div>
 
-    <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 flex items-end gap-8 z-10">
+    {/* 영화 정보 오버레이 */}
+    <div className="absolute inset-0 flex items-end">
+    <div className="max-w-7xl mx-auto px-6 pb-6 pt-12 flex items-end space-x-6 w-full relative z-10">
+    {/* 포스터 이미지 */}
     <img
     src={`${POSTER_BASE_URL}${movie.poster_path}`}
-    className="w-32 md:w-48 rounded-lg shadow-2xl hidden md:block"
     alt={movie.title}
+    className="w-32 h-48 md:w-40 md:h-60 rounded-lg shadow-2xl object-cover transform translate-y-1/4 hidden sm:block"
     />
-    <div className="mb-4">
-    <h1 className="text-4xl font-bold mb-2">{movie.title}</h1>
-    <p className="text-yellow-400 italic mb-4">{movie.tagline}</p>
-    <div className="flex items-center gap-4 text-sm text-gray-300">
-    <span className="flex items-center"><Star className="w-4 h-4 text-yellow-500 mr-1 fill-yellow-500"/> {movie.vote_average.toFixed(1)}</span>
+
+    {/* 텍스트 정보 */}
+    <div className="flex-1 transform translate-y-1/4 sm:translate-y-0">
+    <h1 className="text-4xl md:text-5xl font-extrabold mb-2 drop-shadow-lg">{movie.title}</h1>
+    <div className="text-lg text-gray-300 space-x-4">
+    <span className="inline-flex items-center"><Star className="w-4 h-4 text-yellow-500 mr-1 fill-yellow-500"/> {movie.vote_average.toFixed(1)}</span>
     <span>{movie.runtime}분</span>
     <span>{movie.release_date}</span>
     </div>
     </div>
     </div>
     </div>
+    </div>
 
-    <div className="max-w-7xl mx-auto px-6 mt-8">
+    <div className="max-w-7xl mx-auto px-6 mt-8 sm:mt-16">
     <h3 className="text-2xl font-bold text-white mb-4 border-l-4 border-yellow-500 pl-3">줄거리</h3>
     <p className="text-gray-300 leading-relaxed text-lg">{movie.overview}</p>
 
@@ -77,13 +83,12 @@ const { selectedMovie: movie, detailStatus, detailError } = useSelector((state) 
     {movie.genres && movie.genres.map(g => g.name).join(', ')}</div>
     <div><span className="font-bold text-white">개봉일:</span> {movie.release_date}</div>
     <div><span className="font-bold text-white">런타임:</span> {movie.runtime}분</div>
-    {movie.budget > 0 && <div><span className="font-bold text-white">예산:</span> ${movie.budget.toLocaleString()}</div>}
-    {movie.revenue > 0 && <div><span className="font-bold text-white">수익:</span> ${movie.revenue.toLocaleString()}</div>}
-    <div><span className="font-bold text-white">상태:</span> {movie.status}</div>
-
+    <div><span className="font-bold text-white">제작사:</span>
+    {movie.production_companies && movie.production_companies.map(pc => pc.name).join(', ')}</div>
     </div>
     </div>
     </div>
   );
 };
+
 export default Detail;

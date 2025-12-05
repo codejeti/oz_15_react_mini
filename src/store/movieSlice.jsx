@@ -51,7 +51,12 @@ const movieSlice = createSlice({
       detailStatus: 'idle',
       detailError: null,
   },
-  reducers: {},
+  reducers: {
+    clearSearchResults: (state) => {
+        state.searchResults = [];
+        state.searchStatus = 'idle';
+  },
+},
   extraReducers: (builder) => {
     // getMovies cases (인기 영화)
     builder
@@ -116,4 +121,6 @@ const movieSlice = createSlice({
   },
 });
 
+export const { clearSearchResults } = movieSlice.actions;
+export const {resetSearch} = movieSlice.actions;
 export default movieSlice.reducer;
