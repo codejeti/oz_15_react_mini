@@ -1,136 +1,148 @@
-Movie Explorer
+🎬 Movie Explorer
 
-React + Redux + TailwindCSS 기반 영화 검색 및 추천 서비스입니다.
-TMDB API를 사용하여 인기 영화, 평점 높은 영화, 검색 기능을 제공합니다.
+TMDB 기반 영화 검색 및 추천 서비스입니다.
+평점 슬라이드, 인기 영화 로딩, 검색 결과 표시, 상세 페이지를 제공합니다.
 
-[주요 기능]
+⭐ 주요 기능
+1) 메인 캐러셀 (MovieCarousel)
 
-메인 캐러셀 (MovieCarousel)
+자동 슬라이드
 
-자동 슬라이드 전환
+평점 높은 영화 기준 순환
 
-평점 높은 영화 순서대로 출력
-
-이미지 중앙 정렬 처리 완료
+중앙 정렬 처리 완료
 
 반응형 UI
 
-인기 영화 목록
+2) 인기 영화 목록
 
-첫 페이지 자동 로딩
+초기 1페이지 로딩
 
-"더 불러오기" 버튼 클릭 시 다음 페이지 로딩
+“더 불러오기” 방식으로 추가 페이지 로드
 
-Redux에서 데이터 누적 관리
+Redux 기반 누적 로딩 방식
 
-영화 검색 기능
+3) 영화 검색 기능
 
 TMDB 검색 API 사용
 
-검색 결과는 MovieSlider UI 재사용
+검색 결과는 별도 섹션에 표시
 
-검색 중일 때만 표시
+MovieSlider 컴포넌트 재사용
 
-영화 상세 페이지
+4) 영화 상세 페이지
 
-영화 제목, 설명, 이미지, 평점 제공
+제목, 설명, 이미지 출력
 
-영화 요청 페이지(RequestPage)
+5) 영화 요청 페이지
 
-영화 요청 입력 가능
+제목, 사유 입력 가능
 
-추후 Firestore 연결 가능
+추후 Firestore 연동 가능 구조
 
-[프로젝트 폴더 구조]
-
+📂 프로젝트 구조
 src
-App.jsx
-main.jsx
-index.css
-store/store.jsx
-store/movieSlice.js
-components/
-MovieCarousel.jsx
-MovieSlider.jsx
-MovieCard.jsx
-Skeleton.jsx
-MovieSearch.jsx
-pages/
-Home.jsx
-MovieDetail.jsx
-RequestPage.jsx
+│ App.jsx
+│ main.jsx
+│ index.css
+│
+├ store/
+│  ├ store.jsx
+│  └ movieSlice.js
+│
+├ components/
+│  ├ MovieCarousel.jsx
+│  ├ MovieSlider.jsx
+│  ├ MovieCard.jsx
+│  ├ Skeleton.jsx
+│  └ MovieSearch.jsx
+│
+└ pages/
+   ├ Home.jsx
+   ├ MovieDetail.jsx
+   └ RequestPage.jsx
 
-[해결했던 문제 기록]
+🛠 해결한 이슈 기록
+✔ 캐러셀 배경 정렬 문제
+증상
 
-캐러셀이 왼쪽으로 치우쳐 보이는 문제
+화면이 넓을수록 배경이 왼쪽으로 쏠림
 
-증상:
+오른쪽 여백이 빈 상태로 남음
 
-해상도가 넓어지면 오른쪽 여백 발생
+원인
 
-중앙이 아닌 왼쪽 기준으로 배경 이미지 렌더링됨
+부모 요소 폭 제한 (max-width 영향)
 
-원인:
+기본 background-position: left
 
-background-position 기본값 left
+해결 방법
+style={{
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+}}
 
-넓은 width에서 부모 컨테이너 중앙 정렬이 안됨
+결과
 
-해결:
-backgroundPosition을 center로 설정
-backgroundSize를 cover로 변경
-컨테이너 중앙 정렬로 해결됨
+👍 초광폭 해상도에서도 정렬 정상화
 
-MovieDetail import 실패 문제
-
-오류 메시지:
+✔ MovieDetail import 오류
+오류 메시지 예시
 Failed to resolve import "./pages/MovieDetail"
 
-원인:
-파일명이 Detail.jsx 였음
+원인
 
-해결:
-MovieDetail.jsx 로 파일명 변경 완료
+실제 파일명이 Detail.jsx
 
-unknown at rule @tailwind 경고
+조치
 
-원인:
-VSCode Tailwind 확장 미인식 현상
+파일명을 MovieDetail.jsx로 변경
 
-결론:
-실행에는 문제 없음
-확장 설치 시 해결 가능
+✔ "unknown at rule @tailwind" 경고
+원인
 
-[TailwindCSS 설정 파일 위치]
+VSCode Tailwind 플러그인 미설치
 
+결론
+
+⚠ 실행 및 빌드에는 영향 없음
+✔ 플러그인 설치 시 해결됨
+
+🎨 Tailwind 설정 코드
 tailwind.config.js
+module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}"
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
 
-postcss.config.js
+index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-index.css (최상단 @tailwind 3줄 포함)
-
-[실행 방법]
-
-패키지 설치
+🧪 실행 방법
+의존성 설치
 npm install
 
-실행
+개발 실행
 npm run dev
 
-[사용 기술]
+🔧 기술 스택
+기술	용도
+React	UI 로직
+Redux Toolkit	상태 관리
+React Router	페이지 이동
+TailwindCSS	스타일링
+TMDB API	영화 데이터 제공
+💡 향후 기능 계획
 
-React
-Redux Toolkit
-React Router DOM
-Tailwind CSS
-TMDB API
-
-[앞으로 확장 기능 예정]
-
-영화 요청을 Firestore에 저장 가능
-
-즐겨찾기 기능
-
-사용자 리뷰 기능
-
-로그인 기능 추가 가능
+✔ 영화 요청 Firestore 저장
+✔ 즐겨찾기 기능
+✔ 사용자 리뷰
+✔ 로그인 & 인증
