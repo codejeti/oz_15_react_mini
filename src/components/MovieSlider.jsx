@@ -12,8 +12,8 @@ const MovieSlider = ({ title, movies }) => {
     if (!slider) return;
 
     const handleWheel = (e) => {
-      e.preventDefault();                // ✅ 세로 스크롤 완전 차단
-      slider.scrollLeft += e.deltaY;     // ✅ 가로 이동만 적용
+      e.preventDefault();                //  세로 스크롤 완전 차단
+      slider.scrollLeft += e.deltaY;     //  가로 이동만 적용
     };
 
     // ✅ passive:false 가 핵심
