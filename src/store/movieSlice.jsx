@@ -14,7 +14,7 @@ export const getMovieDetail = createAsyncThunk('movie/getMovieDetail', async (mo
   return data;
 });
 
-// Top Rated 영화를 가져오는 새로운 Thunk 
+// Top Rated 영화를 가져오는 새로운 Thunk
 export const getTopRatedMovies = createAsyncThunk('movie/getTopRatedMovies', async (page = 1) => {
   const data = await fetchTopRatedMovies(page);
   const filtered = data.results.filter((movie) => !movie.adult);
@@ -25,7 +25,10 @@ export const getSearchMovies = createAsyncThunk(
   'movie/getSearchMovies',
   async ({ query, page = 1 }) => {
     const data = await fetchSearchMovies(query, page);
-    return data.results; // 필터링된 결과만 반환
+
+    const filtered = data.results.filter((movie) => !movie.adult);
+
+    return filtered;
   }
 );
 
@@ -33,7 +36,7 @@ const movieSlice = createSlice({
   name: 'movie',
   initialState: {
     movies: [],
-    status: 'idle', // 인기 영화 (메인 목록) 상태
+    status: 'idle',
       error: null,
 
 

@@ -84,7 +84,7 @@ const Home = () => {
       {/* 인기 영화 목록 */}
       {!hasSearchResults && (
         <>
-        <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-yellow-500 pl-3">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 border-l-4 border-yellow-500 pl-3">
         🔥 지금 인기 있는 영화
         </h2>
 

@@ -1,25 +1,25 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store/store';
-import './index.css'
-import Home from './pages/Home';
-import MovieDetail from './pages/MovieDetail';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import MovieDetail from "./pages/MovieDetail";
 import MovieRequestForm from "./pages/MovieRequestForm";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
   return (
-    <Provider store={store}>
-    <Router>
-    <div className="bg-gray-900 min-h-screen text-white">
+    <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
+
+    {/* ✅ 네비게이션 바 */}
+    <Navbar />
+
+    {/* ✅ 페이지 영역 */}
     <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/movie/:id" element={<MovieDetail />} />
     <Route path="/request" element={<MovieRequestForm />} />
     </Routes>
+
     </div>
-    </Router>
-    </Provider>
   );
 }
 
