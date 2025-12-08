@@ -1,36 +1,38 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
 
-const ThemeContext = createContext();
+export const ThemeContext = createContext();
 
-export const useTheme = () => useContext(ThemeContext);
-
-export const ThemeProvider = ({ children }) => {
+export function ThemeProvider({ children }) {
   const [darkMode, setDarkMode] = useState(() => {
-    if (localStorage.theme === 'dark' || 
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      return true;
-    }
-    return false;
+    return localStorage.getItem("darkMode") === "true";
   });
 
-  const toggleDarkMode = () => {
-    setDarkMode(prev => !prev);
-  };
+  // ✅ 밝기 상태 추가 (0.7 ~ 1.3 추천)
+  const [brightness, setBrightness] = useState(() => {
+    return Number(localStorage.getItem("brightness")) || 1;
+  });
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (darkMode) {
-      root.classList.add('dark');
-      localStorage.theme = 'dark';
-    } else {
-      root.classList.remove('dark');
-      localStorage.theme = 'light';
-    }
+    localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
+  useEffect(() => {
+    localStorage.setItem("brightness", brightness);
+  }, [brightness]);
+
   return (
-    <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
-      {children}
+    <ThemeContext.Provider value={{ darkMode, setDarkMode, brightness, setBrightness }}>
+    {/* ✅ 전체 화면에 밝기 필터 적용 */}
+    <div
+    className={darkMode ? "dark" : ""}
+    style={{
+      filter: darkMode ? "none" : `brightness(${brightness})`,
+    }}
+    >
+    {children}
+    </div>
     </ThemeContext.Provider>
   );
-};
+}
+
+export const useTheme = () => useContext(ThemeContext);
