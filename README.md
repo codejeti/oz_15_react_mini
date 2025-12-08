@@ -150,25 +150,3 @@ npm install
 개발 모드 실행
 npm run dev
 
-🔥 기술 스택
-기술	사용 목적
-React	UI 구조
-Redux Toolkit	전역 상태관리
-React Router	페이지 이동
-Tailwind CSS	스타일링
-TMDB API	영화 정보 제공
-Lucide Icons	아이콘 사용
-🧃 향후 확장 아이디어
-
-✔ Firebase Firestore 연동하여
-→ “영화 요청” 저장 가능
-✔ 사용자 리뷰 기능
-✔ 영화별 좋아요/북마크 기능
-✔ 로그인 / 인증 기능 추가 가능
-
-🎉 상태
-
-👉 UI 완성
-👉 기능 정상 작동
-👉 반응형 처리 완료
-👉 버그 수정 완료
