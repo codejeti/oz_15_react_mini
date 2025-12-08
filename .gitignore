@@ -1,25 +1,49 @@
-# 의존성 (Dependencies)
+# ----------------------------------------------------------------------
+# 1. 의존성 (Dependencies)
+# ----------------------------------------------------------------------
 node_modules
-/oz-mini-porject/node_modules 
+/oz-mini-porject/node_modules
 
-# 빌드 결과물 (Build Output)
+# ----------------------------------------------------------------------
+# 2. 빌드 결과물 (Build Output)
+# ----------------------------------------------------------------------
 # Vite의 기본 빌드 폴더
 /dist
-/out 
+/out
+/build
 
 # Vite 관련 캐시 파일 및 폴더
 .vite
 /public/build
 /.vite-inspect
 
-# 환경 변수 (Environment Variables)
+# ----------------------------------------------------------------------
+# 3. 환경 변수 (Environment Variables) - 보안 필수
+# ----------------------------------------------------------------------
+# 로컬 환경 변수 파일 (API KEY 포함 가능)은 모두 무시
 .env
 .env.local
 .env.*.local
+.env.development
+.env.development.local
 
-# 로그 파일 및 운영체제 관련 파일
+# 모든 .env.* 패턴의 파일을 무시하되, 공유가 필요한 파일은 예외 처리 가능
+.env.*
+!.env.example
+# !.env.production # 프로덕션 환경 변수 파일을 공유하는 경우 (선택사항)
+
+# ----------------------------------------------------------------------
+# 4. 로그 및 캐시 파일
+# ----------------------------------------------------------------------
 npm-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-.DS_Store 
-.vscode/
+
+# 시스템 및 IDE 파일
+.DS_Store      # macOS 파일 시스템 메타데이터
+Thumbs.db      # Windows 썸네일 캐시 파일
+
+# IDE 관련 설정 및 캐시 (VS Code, IntelliJ 등)
+.vscode/        # VS Code의 개인 설정
+.idea/          # IntelliJ IDE 설정 폴더
+*.iml
