@@ -85,3 +85,6 @@ npm install
 
 # 2. 개발 서버 실행
 npm run dev
+
+## 최종 제출 버전
+- Mission 3 최종 제출용 정리 커밋입니다.
