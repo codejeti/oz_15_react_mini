@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import MovieDetail from "./pages/MovieDetail";
 import MovieRequestForm from "./pages/MovieRequestForm";
 import Navbar from "./components/Navbar.jsx";
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
     <Route path="/" element={<Home />} />
     <Route path="/movie/:id" element={<MovieDetail />} />
     <Route path="/request" element={<MovieRequestForm />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/signup" element={<Signup />} />
     </Routes>
 
     </div>
