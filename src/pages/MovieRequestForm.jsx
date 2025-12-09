@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Send } from 'lucide-react';
+import { submitMovieRequest } from '../supabaseClient';
 
 const MovieRequestForm = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title) {
       alert("영화 제목을 입력해 주세요.");
       return;
     }
 
-    // 다음 단계에서 여기에 Firebase 'addDoc' 로직을 추가할 예정입니다.
-    console.log(`[영화 요청됨] 제목: ${title}, 설명: ${description}`);
-
-    alert(`영화 "${title}"의 추가 요청이 접수되었습니다!`);
+    try {
+      await submitMovieRequest({ title, description });
+      alert(`영화 "${title}"의 추가 요청이 Supabase에 접수되었습니다!`);
+    } catch (error) {
+      console.error('Supabase에 요청을 저장하는 중 오류 발생:', error);
+      alert('요청 저장 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      return;
+    }
 
     // 요청 후 홈으로 이동
     navigate('/');
