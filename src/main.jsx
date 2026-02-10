@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
   <Provider store={store}>
   <ThemeProvider>
-  <BrowserRouter>
+  <BrowserRouter basename="/oz_15_react_mini/">
   <App />
   </BrowserRouter>
   </ThemeProvider>

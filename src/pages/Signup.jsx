@@ -14,7 +14,6 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
         if (!name.trim()) {
             alert('이름을 입력해 주세요.');
             return;
@@ -106,5 +105,5 @@ const Signup = () => {
     );
 };
 
-// ✅ 이게 중요! default export
+
 export default Signup;

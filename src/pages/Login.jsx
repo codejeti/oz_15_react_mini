@@ -78,3 +78,4 @@ const Login = () => {
 };
 
 export default Login;
+// label - input은 같이 사용하고 htmlfor-id -> 시멘틱한 문법임(권장되는 문법)

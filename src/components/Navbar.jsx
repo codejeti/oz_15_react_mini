@@ -22,6 +22,7 @@ const Navbar = () => {
     const handleLogout = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("user_profile");
+        localStorage.removeItem("user_email");
         alert("로그아웃 되었습니다.");
         navigate("/");
         window.location.reload();
